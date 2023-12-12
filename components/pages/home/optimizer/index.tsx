@@ -1,6 +1,7 @@
 import { type FC, useState } from 'react';
 
 import ImportsInput from './imports-input';
+import Recommendations from './recommendations';
 
 const Optimizer: FC = () => {
   const [input, setInput] = useState<string>('');
@@ -8,7 +9,7 @@ const Optimizer: FC = () => {
   return (
     <div className="flex flex-col space-y-4">
       <ImportsInput input={input} setInput={setInput} />
-      <div>bb</div>
+      <Recommendations input={input} />
     </div>
   );
 };

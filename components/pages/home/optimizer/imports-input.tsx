@@ -1,6 +1,6 @@
-import { type FC, useState } from 'react';
+import { type FC } from 'react';
 
-import { Input } from '@/components/ui';
+import { Textarea } from '@/components/ui';
 
 // -----------------------------------------------------------------------------
 // Props
@@ -17,11 +17,11 @@ type ImportsInputProps = {
 
 const ImportsInput: FC<ImportsInputProps> = ({ input, setInput }) => {
   return (
-    <Input
+    <Textarea
       value={input}
       onChange={(e) => setInput(e.target.value)}
       placeholder="paste your contract here"
-      className="text-sm"
+      className="min-h-[200px] text-sm"
     />
   );
 };
