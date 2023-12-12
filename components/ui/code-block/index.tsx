@@ -7,6 +7,8 @@ import {
   codeBlockHeaderFileNameIconStyles,
   codeBlockHeaderFileNameStyles,
   codeBlockHeaderStyles,
+  codeBlockLineHighlightedDiffMinusStyles,
+  codeBlockLineHighlightedDiffPlusStyles,
   codeBlockLineHighlightedStyles,
   codeBlockLineNumberStyles,
   codeBlockLineStyles,
@@ -39,6 +41,8 @@ const CodeBlock: FC<CodeBlockProps> = ({
   fileName,
   language = 'none',
   highlightLines = [],
+  highlightLinesDiffPlus = [],
+  highlightLinesDiffMinus = [],
   showLineNumbers = true,
   roundedTop = true,
   children,
@@ -116,6 +120,12 @@ const CodeBlock: FC<CodeBlockProps> = ({
                         className,
                         codeBlockLineStyles,
                         highlightLines.includes(i + 1) ? codeBlockLineHighlightedStyles : '',
+                        highlightLinesDiffPlus.includes(i + 1)
+                          ? codeBlockLineHighlightedDiffPlusStyles
+                          : '',
+                        highlightLinesDiffMinus.includes(i + 1)
+                          ? codeBlockLineHighlightedDiffMinusStyles
+                          : '',
                       )}
                       {...restLineProps}
                     >
