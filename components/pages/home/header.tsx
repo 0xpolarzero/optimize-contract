@@ -2,7 +2,6 @@ import type { FC } from 'react';
 
 import { Github } from 'lucide-react';
 
-import LogoIcon from '@/components/common/logo-icon';
 import WebsiteAvatar from '@/components/common/website-avatar';
 import { Button } from '@/components/ui';
 
