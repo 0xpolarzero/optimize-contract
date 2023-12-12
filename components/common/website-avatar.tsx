@@ -21,11 +21,11 @@ type WebsiteAvatarProps = {
 const WebsiteAvatar: FC<WebsiteAvatarProps> = ({ className, size = 40 }) => {
   return (
     <Image
-      className={cn('my-0 rounded-full border border-gray-6', className)}
+      className={cn('my-0 opacity-80', className)}
       width={size}
       height={size}
       src={avatar}
-      alt="polarzero avatar"
+      alt="optimize_contracts avatar"
     />
   );
 };
