@@ -28,6 +28,9 @@ export const codeBlockLineHighlightedDiffMinusStyles =
   'bg-red-4 shadow-[inset_2px_0] shadow-red-9 opacity-70';
 
 export const codeBlockLineNumberStyles = 'mr-4 inline-block w-4 text-end text-gray-11 select-none';
+export const codeBlockDiffPlusStyles = 'inline-block w-4 text-green-11 select-none';
+export const codeBlockDiffMinusStyles = 'inline-block w-4 text-red-11 select-none';
+export const codeBlockDiffNoneStyles = 'inline-block w-4 select-none';
 
 export const codeBlockLineStyles = 'px-4 min-w-fit';
 

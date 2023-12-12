@@ -3,6 +3,9 @@ import { type FC, useEffect, useState } from 'react';
 import CodeBlockLanguageLogo from './language-logo';
 import {
   codeBlockContainerVariants,
+  codeBlockDiffMinusStyles,
+  codeBlockDiffNoneStyles,
+  codeBlockDiffPlusStyles,
   codeBlockHeaderFileNameContainerStyles,
   codeBlockHeaderFileNameIconStyles,
   codeBlockHeaderFileNameStyles,
@@ -131,6 +134,17 @@ const CodeBlock: FC<CodeBlockProps> = ({
                     >
                       {showLineNumbers ? (
                         <div className={codeBlockLineNumberStyles}>{i + 1}</div>
+                      ) : highlightLinesDiffPlus.length || highlightLinesDiffMinus.length ? (
+                        highlightLinesDiffPlus.includes(i + 1) ? (
+                          // plus
+                          <div className={codeBlockDiffPlusStyles}>+</div>
+                        ) : highlightLinesDiffMinus.includes(i + 1) ? (
+                          // minus
+                          <div className={codeBlockDiffMinusStyles}>-</div>
+                        ) : (
+                          // none
+                          <div className={codeBlockDiffNoneStyles} />
+                        )
                       ) : null}
                       {line.map((token, key) => (
                         <span key={key} {...getTokenProps({ token })} />
