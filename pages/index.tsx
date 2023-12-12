@@ -5,6 +5,7 @@ import { NextSeo } from 'next-seo';
 import BaseLayout from '@/components/layouts/base';
 import ContainerLayout from '@/components/layouts/container';
 import WebsiteHeader from '@/components/pages/home/header';
+import Optimizer from '@/components/pages/home/optimizer';
 
 // -----------------------------------------------------------------------------
 // Page
@@ -36,6 +37,7 @@ const HomePage: NextPage = () => {
       <BaseLayout subtitle="Home" pageSlug="/">
         <ContainerLayout className="flex flex-col space-y-4">
           <WebsiteHeader />
+          <Optimizer />
         </ContainerLayout>
       </BaseLayout>
     </>
