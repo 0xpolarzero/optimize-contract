@@ -97,7 +97,7 @@ const Instructions: FC<InstructionsProps> = ({ recommendations }) => {
                     {recs.map((rec, i) => (
                       <div key={i}>
                         <Link
-                          className="underline"
+                          className="font-medium underline"
                           href={rec.url}
                           rel="noopener noreferrer"
                           target="_blank"
