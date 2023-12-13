@@ -41,7 +41,6 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
 
       const processed = lines.map((line) => {
         const recommended = findRecommendationFromImport(line);
-        console.log(line);
         if (!recommended) return { value: line, highlight: 0 };
 
         rec.push(recommended);
@@ -50,8 +49,6 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
           { value: recommended.import, highlight: 1 },
         ];
       });
-
-      console.log(processed);
 
       setUpdatedLines(processed.flat());
       setRecommendations(rec);

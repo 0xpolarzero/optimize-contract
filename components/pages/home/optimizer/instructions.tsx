@@ -45,7 +45,7 @@ const Instructions: FC<InstructionsProps> = ({ recommendations }) => {
       <div className="flex flex-col space-y-2">
         {Object.entries(librariesWithRecommendations).map(([libraryName, recs]) => {
           const library = LIBRARY_INFOS[libraryName as RecommendedLibrary];
-          console.log('items', recs);
+
           return (
             <div key={libraryName} className="flex flex-col space-y-2">
               <FeatureDisplay
