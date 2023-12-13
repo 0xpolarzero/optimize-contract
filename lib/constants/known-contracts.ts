@@ -1,5 +1,4 @@
-import { RECOMMENDATIONS } from './recommendations';
-
+import { RECOMMENDED_CONTRACTS } from '@/lib/constants/recommended-libraries';
 import { KnownContract, KnownLibrary } from '@/lib/types/library';
 
 export const PREFIXES: Record<KnownLibrary, string[]> = {
@@ -12,7 +11,7 @@ export const KNOWN_CONTRACTS: Record<KnownLibrary, KnownContract[]> = {
       library: 'OpenZeppelin',
       name: 'ERC20',
       url: 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol',
-      recommendation: RECOMMENDATIONS['Solady']['ERC20'],
+      recommendation: RECOMMENDED_CONTRACTS['Solady'].find((contract) => contract.name === 'ERC20'),
     },
   ],
 };
