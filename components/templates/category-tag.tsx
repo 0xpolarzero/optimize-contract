@@ -1,7 +1,5 @@
 import type { FC } from 'react';
 
-import { useCategoriesFilters } from '@/lib/stores/useCategoriesFilters';
-
 import { Badge } from '@/components/ui';
 import type { BadgeProps } from '@/components/ui/badge/types';
 

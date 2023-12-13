@@ -1,4 +1,4 @@
-import { RecommendedContract, RecommendedLibrary } from '@/lib/types/library';
+import { RecommendedContract } from '@/lib/types/library';
 
 const tree = `accounts
 ├─ Receiver — "Receiver mixin for ETH and safe-transferred ERC721 and ERC1155 tokens"
