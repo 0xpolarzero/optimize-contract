@@ -22,7 +22,7 @@ const HomePage: NextPage = () => {
           site_name: 'optimize_dependencies',
           images: [
             {
-              url: 'optimize_dependencies_url/api/og/page?title=optimize_dependencies&description=optimize_dependencies_description.',
+              url: '/static/og-images/home.png',
               width: 1200,
               height: 630,
               alt: 'optimize_dependencies open-graph image',

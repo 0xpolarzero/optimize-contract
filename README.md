@@ -7,6 +7,10 @@ Forked and modified by polarzero from [5/9 design system](https://fiveoutofnine.
 - replace optimize_dependencies (name)
 - replace optimize_dependencies_description (description)
 - replace optimize_dependencies_url (url)
+- replace optimize_dependencies_github_url (github url)
+- replace optimize_dependencies_github_name (github name)
+- regenerate og image for home, and add it as public/static/og-images/home.png
+  http://localhost:3000/api/og/page?title=optimize_dependencies&description=optimize_dependencies_description&path=/
 
 ---
 
