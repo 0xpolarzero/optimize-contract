@@ -77,8 +77,8 @@ const Instructions: FC<InstructionsProps> = ({ recommendations }) => {
                 <div className="flex h-full flex-col space-y-4 p-4 text-[0.92rem]">
                   {library.audit ? (
                     <div className="flex items-center space-x-2 text-sm text-gray-11">
-                      <Tooltip content={`Audited by/on ${library.audit.authors.join(', ')}`}>
-                        <Badge variant="secondary" intent="success">
+                      <Badge variant="secondary" intent="success">
+                        <Tooltip content={library.audit.authors.join(', ')}>
                           <Link
                             className="flex items-center space-x-2 hover:underline"
                             href={library.audit.url}
@@ -88,8 +88,8 @@ const Instructions: FC<InstructionsProps> = ({ recommendations }) => {
                             <Check size={16} />
                             <span>Audited</span>
                           </Link>
-                        </Badge>
-                      </Tooltip>
+                        </Tooltip>
+                      </Badge>
                     </div>
                   ) : null}
                   <div className="text-gray-12">{library.instructions || ''}</div>
