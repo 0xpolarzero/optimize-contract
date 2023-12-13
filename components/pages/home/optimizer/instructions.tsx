@@ -3,7 +3,7 @@ import { type FC, useMemo } from 'react';
 
 import { Check, ExternalLink, Github } from 'lucide-react';
 
-import { LIBRARIES } from '@/lib/constants/libraries';
+import { LIBRARY_INFOS } from '@/lib/constants/library-infos';
 import { RecommendedContract, RecommendedLibrary } from '@/lib/types/library';
 
 import CategoryTag, { Category } from '@/components/templates/category-tag';
@@ -44,7 +44,7 @@ const Instructions: FC<InstructionsProps> = ({ recommendations }) => {
       <p className="text-gray-11">2. Add the following to your contract:</p>
       <div className="flex flex-col space-y-2">
         {Object.entries(librariesWithRecommendations).map(([libraryName, recs]) => {
-          const library = LIBRARIES[libraryName as RecommendedLibrary];
+          const library = LIBRARY_INFOS[libraryName as RecommendedLibrary];
           console.log('items', recs);
           return (
             <div key={libraryName} className="flex flex-col space-y-2">
