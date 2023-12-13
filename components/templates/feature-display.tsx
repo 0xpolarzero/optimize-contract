@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { type FC, type ReactNode, useState } from 'react';
+import { type FC, type ReactNode } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -35,10 +35,8 @@ const FeatureDisplay: FC<FeatureDisplayProps> = ({
   children,
   internalLink,
   addUrl,
-  bgBase = 'bg-gray',
 }) => {
   const router = useRouter();
-  const [hovered, hover] = useState(false);
 
   const handleClick = () => {
     if (addUrl) {
@@ -57,12 +55,7 @@ const FeatureDisplay: FC<FeatureDisplayProps> = ({
     >
       {/* Header */}
       <div
-        className={cn(
-          'relative flex h-[4.5rem] cursor-pointer items-center space-x-2.5 border-b border-gray-7 px-4 transition duration-200 ease-in-out',
-          hovered ? `${bgBase}-3` : `${bgBase}-2`,
-        )}
-        onPointerEnter={() => hover(true)}
-        onPointerLeave={() => hover(false)}
+        className="relative flex h-[4.5rem] items-center space-x-2.5 border-b border-gray-7 bg-gray-2 px-4"
         onClick={handleClick}
       >
         {/* Symbol */}
@@ -77,25 +70,14 @@ const FeatureDisplay: FC<FeatureDisplayProps> = ({
       </div>
 
       {/* Body */}
-      <div
-        className={cn(
-          'w-full grow cursor-pointer transition duration-200 ease-in-out',
-          hovered ? `${bgBase}-3` : `${bgBase}-2`,
-        )}
-        onPointerEnter={() => hover(true)}
-        onPointerLeave={() => hover(false)}
-        onClick={handleClick}
-      >
+      <div className="w-full grow bg-gray-2" onClick={handleClick}>
         {children}
       </div>
 
       {/* Footer */}
       {tags || button ? (
         <div
-          className={cn(
-            'flex h-min flex-wrap items-center justify-between border-t border-gray-6 p-2 transition duration-200 ease-in-out sm:flex-nowrap',
-            hovered ? `${bgBase}-3` : `${bgBase}-2`,
-          )}
+          className="flex h-min flex-wrap items-center justify-between border-t border-gray-6 bg-gray-2 p-2 transition duration-200 ease-in-out sm:flex-nowrap"
           style={{ gap: 8 }}
         >
           {/* Tags */}
