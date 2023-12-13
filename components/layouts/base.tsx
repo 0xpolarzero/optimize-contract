@@ -29,7 +29,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ title, subtitle, pageSlug, children }
         <div className=" py-2 text-center text-[0.8rem] text-gray-11">
           by{' '}
           <Link
-            className="font-medium text-gray-12 hover:underline"
+            className="font-medium underline"
             href="https://twitter.com/0xpolarzero"
             target="_blank"
             rel="noreferrer noopener"
@@ -38,7 +38,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ title, subtitle, pageSlug, children }
           </Link>
           , design forked from{' '}
           <Link
-            className="font-medium text-gray-12 hover:underline"
+            className="font-medium underline"
             href="https://fiveoutofnine.com"
             target="_blank"
             rel="noreferrer noopener"
