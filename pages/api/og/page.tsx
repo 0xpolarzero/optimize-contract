@@ -173,7 +173,7 @@ export default async function handler(req: NextRequest) {
                   letterSpacing: '-0.025em',
                 }}
               >
-                optimize_contracts
+                optimize_dependencies
               </div>
             </div>
             <div

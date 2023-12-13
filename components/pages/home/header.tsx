@@ -14,16 +14,16 @@ const WebsiteHeader: FC = () => {
         {/* Avatar (mobile) */}
         <WebsiteAvatar className="mr-2 md:hidden" size={32} />
         <div>
-          <div className="text-base font-semibold md:text-2xl">optimize_contracts</div>
+          <div className="text-base font-semibold md:text-2xl">optimize_dependencies</div>
           <span className="mt-0.5 text-sm text-gray-11 md:mt-1 md:text-base">
-            optimize_contracts_description
+            optimize_dependencies_description
           </span>
         </div>
       </div>
 
       {/* Links (desktop) */}
       <div className="hidden space-x-2 md:flex">
-        <Button href="optimize_contracts_github_url" leftIcon={<Github />} newTab>
+        <Button href="optimize_dependencies_github_url" leftIcon={<Github />} newTab>
           GitHub
         </Button>
       </div>
@@ -32,7 +32,7 @@ const WebsiteHeader: FC = () => {
         <Button
           size="md"
           className="w-full"
-          href="optimize_contracts_github_url"
+          href="optimize_dependencies_github_url"
           leftIcon={<Github />}
         >
           GitHub

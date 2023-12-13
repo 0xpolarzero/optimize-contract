@@ -4,9 +4,9 @@ Forked and modified by polarzero from [5/9 design system](https://fiveoutofnine.
 
 ---
 
-- replace optimize_contracts (name)
-- replace optimize_contracts_description (description)
-- replace optimize_contracts_url (url)
+- replace optimize_dependencies (name)
+- replace optimize_dependencies_description (description)
+- replace optimize_dependencies_url (url)
 
 ---
 

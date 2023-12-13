@@ -29,22 +29,22 @@ const firaCode = Fira_Code({
 // -----------------------------------------------------------------------------
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
-  const DESCRIPTION = 'optimize_contracts_description';
+  const DESCRIPTION = 'optimize_dependencies_description';
 
   return (
     <>
       <DefaultSeo
-        titleTemplate="%s | optimize_contracts"
-        defaultTitle="optimize_contracts"
+        titleTemplate="%s | optimize_dependencies"
+        defaultTitle="optimize_dependencies"
         description={DESCRIPTION}
-        canonical="optimize_contracts_url"
+        canonical="optimize_dependencies_url"
         themeColor="#000"
         openGraph={{
           type: 'website',
           locale: 'en_US',
           description: DESCRIPTION,
-          url: 'optimize_contracts_url',
-          site_name: 'optimize_contracts',
+          url: 'optimize_dependencies_url',
+          site_name: 'optimize_dependencies',
         }}
         twitter={{
           handle: '@0xpolarzero',

@@ -18,14 +18,14 @@ const HomePage: NextPage = () => {
         openGraph={{
           type: 'website',
           locale: 'en_US',
-          url: 'optimize_contracts_url',
-          site_name: 'optimize_contracts',
+          url: 'optimize_dependencies_url',
+          site_name: 'optimize_dependencies',
           images: [
             {
-              url: 'optimize_contracts_url/api/og/page?title=optimize_contracts&description=optimize_contracts_description.',
+              url: 'optimize_dependencies_url/api/og/page?title=optimize_dependencies&description=optimize_dependencies_description.',
               width: 1200,
               height: 630,
-              alt: 'optimize_contracts open-graph image',
+              alt: 'optimize_dependencies open-graph image',
             },
           ],
         }}
