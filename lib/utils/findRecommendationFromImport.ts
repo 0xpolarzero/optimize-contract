@@ -1,27 +1,28 @@
-import { KNOWN_CONTRACTS, PREFIXES } from '@/lib/constants/known-contracts';
-import { KnownLibrary, RecommendedContract } from '@/lib/types/library';
+import { RECOMMENDED_LIBRARIES } from '../constants/recommended-libraries';
+
+import { KNOWN_LIBRARIES } from '@/lib/constants/known-libraries';
+import { RecommendedContract, RecommendedLibrary } from '@/lib/types/library';
 
 const findRecommendationFromImport = (line: string): RecommendedContract | null => {
-  // Find the library
-  const lib = Object.keys(PREFIXES).find((library) => {
-    const prefixes = PREFIXES[library as KnownLibrary];
-    return prefixes.some((prefix) => line.includes(prefix));
-  });
-  if (!lib) return null;
+  // For all known libraries
+  for (const [library, prefixes] of Object.entries(KNOWN_LIBRARIES)) {
+    // If the import line contains a known prefix (associated with a recommendation)
+    if (prefixes.some((prefix) => line.includes(prefix))) {
+      // Get all its contracts
+      const libraryContracts = RECOMMENDED_LIBRARIES[library as RecommendedLibrary];
 
-  // Find the contract
-  // Catch the exact contract name from the import statement (just catch what is before .sol until the previous /)
-  const findName = line.match(/\/([^/]+)\.sol/);
-  const contractName = findName ? findName[1] : null;
-  if (!contractName) return null; // this should never happen
+      // Find the contract matching the import
+      const findName = line.match(/\/([^/]+)\.sol/);
+      const contractName = findName ? findName[1] : null;
 
-  // Find the recommended alternative, if any
-  const contract = KNOWN_CONTRACTS[lib as KnownLibrary].find(
-    (contract) => contract.name === contractName,
-  );
-  if (!contract) return null;
+      if (contractName) {
+        // Return the recommended alternative if it exists
+        return libraryContracts.find((contract) => contract.name === contractName) || null;
+      }
+    }
+  }
 
-  return contract.recommendation;
+  return null;
 };
 
 export default findRecommendationFromImport;

@@ -1,16 +1,14 @@
-import Link from 'next/link';
-
-import { RECOMMENDED_CONTRACTS } from './recommended-libraries';
+import { RECOMMENDED_LIBRARIES } from './recommended-libraries';
 
 import { Library, RecommendedLibrary } from '@/lib/types/library';
 
-export const LIBRARIES: Record<RecommendedLibrary, Library> = {
+export const LIBRARY_INFOS: Record<RecommendedLibrary, Library> = {
   Solady: {
     name: 'Solady',
     author: { name: 'Vectorized', url: 'https://twitter.com/optimizoor' },
     description: 'Gas optimized Solidity snippets.',
     url: 'https://github.com/Vectorized/solady',
-    contracts: Object.values(RECOMMENDED_CONTRACTS['Solady']),
+    contracts: Object.values(RECOMMENDED_LIBRARIES['Solady']),
     instructions:
       'Each contract is thoroughly documented; please pay extra attention to the small distinctions with standard OpenZeppelin/Solmate implementations.',
     audit: {
