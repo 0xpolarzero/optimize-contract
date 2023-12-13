@@ -36,7 +36,13 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
 
   useEffect(() => {
     const processLines = () => {
-      if (!lines) return;
+      if (!lines) {
+        setUpdatedLines([]);
+        setRecommendations([]);
+        setUpdatedCount(0);
+        return;
+      }
+
       const rec: RecommendedContract[] = [];
 
       const processed = lines.map((line) => {
