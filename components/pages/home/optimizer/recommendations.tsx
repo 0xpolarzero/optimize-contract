@@ -61,7 +61,7 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
     processLines();
   }, [lines]);
 
-  if (!updatedLines.length) {
+  if (!updatedCount) {
     return <div className="text-gray-11">No recommendations to show</div>;
   }
 
