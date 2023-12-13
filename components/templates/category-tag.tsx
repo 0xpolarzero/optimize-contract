@@ -9,10 +9,11 @@ import type { BadgeProps } from '@/components/ui/badge/types';
 // Props
 // -----------------------------------------------------------------------------
 
-export type Category = 'test' | 'other';
+export type Category = 'Vectorized';
 
 export type CategoryTagProps = Omit<BadgeProps, 'variant' | 'intent'> & {
-  category: 'test' | 'other';
+  category: Category;
+  url?: string;
 };
 
 type Intent = 'none' | 'primary' | 'success' | 'fail' | 'warning' | 'orange';
@@ -21,13 +22,14 @@ type Intent = 'none' | 'primary' | 'success' | 'fail' | 'warning' | 'orange';
 // Component
 // -----------------------------------------------------------------------------
 
-const CategoryTag: FC<CategoryTagProps> = ({ size, category, ...rest }) => {
+const CategoryTag: FC<CategoryTagProps> = ({ size, category, url, ...rest }) => {
   const CATEGORY_TO_COLORS: Record<typeof category, Intent> = {
-    test: 'primary',
-    other: 'orange',
+    Vectorized: 'orange',
   };
 
-  const filter = useCategoriesFilters((state) => state.filter);
+  const openUrl = () => {
+    window.open(url, '_blank');
+  };
 
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -37,7 +39,7 @@ const CategoryTag: FC<CategoryTagProps> = ({ size, category, ...rest }) => {
       variant="secondary"
       intent={CATEGORY_TO_COLORS[category]}
       className="hover:cursor-pointer hover:underline"
-      onClick={() => filter(category)}
+      onClick={() => openUrl()}
       {...rest}
     >
       {category}
