@@ -4,22 +4,24 @@ export type RecommendedLibrary = 'Solady';
 
 export type Library = {
   name: KnownLibrary | RecommendedLibrary;
+  description: string;
   url: string;
   contracts: Contract[];
   instructions?: string;
 };
 
 type Contract = {
-  library: KnownLibrary | RecommendedLibrary;
   name: string;
   url: string;
 };
 
 export type KnownContract = Contract & {
-  recommendation: RecommendedContract;
+  library: KnownLibrary;
+  recommendation: RecommendedContract | undefined;
 };
 
 export type RecommendedContract = Contract & {
+  library: RecommendedLibrary;
   import: string;
-  instructions?: string;
+  description: string;
 };
