@@ -1,13 +1,16 @@
-export type KnownLibrary = 'OpenZeppelin';
-
-export type RecommendedLibrary = 'Solady';
-
 export type Library = {
   name: KnownLibrary | RecommendedLibrary;
+  author: Author;
   description: string;
   url: string;
   contracts: Contract[];
   instructions?: string;
+  audit?: Audit;
+};
+
+type Author = {
+  name: string;
+  url: string;
 };
 
 type Contract = {
@@ -15,10 +18,28 @@ type Contract = {
   url: string;
 };
 
+type Audit = {
+  authors: string[];
+  dates: Date[];
+  url: string;
+};
+
+/**
+ * Known libraries/contracts
+ */
+
+export type KnownLibrary = 'OpenZeppelin';
+
 export type KnownContract = Contract & {
   library: KnownLibrary;
   recommendation: RecommendedContract | undefined;
 };
+
+/**
+ * Recommended libraries/contracts
+ */
+
+export type RecommendedLibrary = 'Solady';
 
 export type RecommendedContract = Contract & {
   library: RecommendedLibrary;
