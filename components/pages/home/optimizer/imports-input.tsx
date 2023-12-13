@@ -21,7 +21,7 @@ const ImportsInput: FC<ImportsInputProps> = ({ input, setInput }) => {
       value={input}
       onChange={(e) => setInput(e.target.value)}
       placeholder="paste your contract here"
-      className="min-h-[200px] text-sm"
+      className="min-h-[100px] text-sm transition-all focus:min-h-[200px]"
     />
   );
 };

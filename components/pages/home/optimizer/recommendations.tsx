@@ -3,6 +3,7 @@ import { type FC, useEffect, useMemo, useState } from 'react';
 import { RecommendedContract } from '@/lib/types/library';
 import { findRecommendationFromImport } from '@/lib/utils';
 
+import Instructions from '@/components/pages/home/optimizer/instructions';
 import { CodeBlock } from '@/components/ui';
 
 // -----------------------------------------------------------------------------
@@ -61,14 +62,19 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
   }, [lines]);
 
   if (!updatedLines.length) {
-    return null;
+    return <div className="text-gray-11">No recommendations to show</div>;
   }
 
   return (
     <div className="flex flex-col space-y-2">
+      <h2 className="text-xl font-semibold leading-tight tracking-tight text-gray-12 md:text-2xl">
+        Recommendations
+      </h2>
+      {/* imports count */}
       <span className="text-gray-11">
-        {updatedCount} import{updatedCount > 1 ? 's' : ''} updated
+        1. Update {updatedCount} import{updatedCount > 1 ? 's' : ''}
       </span>
+      {/* updated code */}
       <CodeBlock
         language="solidity"
         showLineNumbers={false}
@@ -77,6 +83,8 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
       >
         {updatedLines.map((line) => line.value).join('\n')}
       </CodeBlock>
+      {/* instructions */}
+      <Instructions recommendations={recommendations} />
     </div>
   );
 };
