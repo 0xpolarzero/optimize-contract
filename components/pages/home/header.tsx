@@ -14,27 +14,22 @@ const WebsiteHeader: FC = () => {
         {/* Avatar (mobile) */}
         <WebsiteAvatar className="mr-2 md:hidden" size={32} />
         <div>
-          <div className="text-base font-semibold md:text-2xl">optimize_dependencies</div>
+          <div className="text-base font-semibold md:text-2xl">optimize_deps</div>
           <span className="mt-0.5 text-sm text-gray-11 md:mt-1 md:text-base">
-            optimize_dependencies_description
+            optimize_deps_description
           </span>
         </div>
       </div>
 
       {/* Links (desktop) */}
       <div className="hidden space-x-2 md:flex">
-        <Button href="optimize_dependencies_github_url" leftIcon={<Github />} newTab>
+        <Button href="optimize_deps_github_url" leftIcon={<Github />} newTab>
           GitHub
         </Button>
       </div>
       {/* Links (mobile) */}
       <div className="mt-4 flex w-full space-x-2 md:hidden">
-        <Button
-          size="md"
-          className="w-full"
-          href="optimize_dependencies_github_url"
-          leftIcon={<Github />}
-        >
+        <Button size="md" className="w-full" href="optimize_deps_github_url" leftIcon={<Github />}>
           GitHub
         </Button>
       </div>

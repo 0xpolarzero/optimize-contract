@@ -25,7 +25,7 @@ const WebsiteAvatar: FC<WebsiteAvatarProps> = ({ className, size = 40 }) => {
       width={size}
       height={size}
       src={avatar}
-      alt="optimize_dependencies avatar"
+      alt="optimize_deps avatar"
     />
   );
 };

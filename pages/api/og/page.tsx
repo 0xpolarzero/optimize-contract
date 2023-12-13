@@ -149,7 +149,7 @@ export default async function handler(req: NextRequest) {
                   letterSpacing: '-0.025em',
                 }}
               >
-                0xpolarzero/optimize_dependencies_github_name
+                0xpolarzero/optimize_deps_github_name
               </div>
             </div>
             <div

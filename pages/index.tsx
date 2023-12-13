@@ -18,14 +18,14 @@ const HomePage: NextPage = () => {
         openGraph={{
           type: 'website',
           locale: 'en_US',
-          url: 'optimize_dependencies_url',
-          site_name: 'optimize_dependencies',
+          url: 'optimize_deps_url',
+          site_name: 'optimize_deps',
           images: [
             {
               url: '/static/og-images/home.png',
               width: 1200,
               height: 630,
-              alt: 'optimize_dependencies open-graph image',
+              alt: 'optimize_deps open-graph image',
             },
           ],
         }}
