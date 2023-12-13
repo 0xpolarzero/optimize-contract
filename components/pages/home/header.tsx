@@ -23,13 +23,22 @@ const WebsiteHeader: FC = () => {
 
       {/* Links (desktop) */}
       <div className="hidden space-x-2 md:flex">
-        <Button href="optimize_deps_github_url" leftIcon={<Github />} newTab>
+        <Button
+          href="https://github.com/0xpolarzero/optimize-dependencies"
+          leftIcon={<Github />}
+          newTab
+        >
           GitHub
         </Button>
       </div>
       {/* Links (mobile) */}
       <div className="mt-4 flex w-full space-x-2 md:hidden">
-        <Button size="md" className="w-full" href="optimize_deps_github_url" leftIcon={<Github />}>
+        <Button
+          size="md"
+          className="w-full"
+          href="https://github.com/0xpolarzero/optimize-dependencies"
+          leftIcon={<Github />}
+        >
           GitHub
         </Button>
       </div>
