@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import { Github } from 'lucide-react';
+import { ExternalLink, Github } from 'lucide-react';
 
 import WebsiteAvatar from '@/components/common/website-avatar';
 import { Button } from '@/components/ui';
@@ -19,6 +19,16 @@ const WebsiteHeader: FC = () => {
             Paste a smart contract, and it will recommend more optimized dependencies, as well as a
             few basic best practices for saving gas.
           </span>
+          <div className="mt-1 text-sm text-gray-11 md:mt-2 md:text-base">
+            <Button
+              href="https://github.com/0xpolarzero/optimize-dependencies?tab=readme-ov-file#features"
+              leftIcon={<ExternalLink />}
+              variant="outline"
+              newTab
+            >
+              Features details
+            </Button>
+          </div>
         </div>
       </div>
 
