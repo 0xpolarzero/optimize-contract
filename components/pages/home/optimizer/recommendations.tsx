@@ -46,10 +46,12 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
 
       const rec: RecommendedContract[] = [];
 
+      let updated = 0;
       const processed = lines.flatMap((line) => {
         const recommended = findRecommendation_libraryToLibrary(line);
         if (!recommended || recommended.length === 0) return [{ value: line, highlight: 0 }];
 
+        updated += 1;
         rec.push(...recommended);
         return [
           { value: line, highlight: -1 },
@@ -61,7 +63,7 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
 
       setUpdatedLines(processed);
       setRecommendations(rec);
-      setUpdatedCount(rec.length);
+      setUpdatedCount(updated);
     };
 
     processLines();
