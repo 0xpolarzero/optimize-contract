@@ -1,7 +1,7 @@
 import { type FC, useEffect, useMemo, useState } from 'react';
 
 import { RecommendedContract } from '@/lib/types/library';
-import { findRecommendationFromImport } from '@/lib/utils';
+import { findRecommendation_libraryToLibrary } from '@/lib/utils';
 
 import Instructions from '@/components/pages/home/optimizer/instructions';
 import { CodeBlock } from '@/components/ui';
@@ -46,7 +46,7 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
       const rec: RecommendedContract[] = [];
 
       const processed = lines.map((line) => {
-        const recommended = findRecommendationFromImport(line);
+        const recommended = findRecommendation_libraryToLibrary(line);
         if (!recommended) return { value: line, highlight: 0 };
 
         rec.push(recommended);
