@@ -13,10 +13,11 @@ const WebsiteHeader: FC = () => {
         <WebsiteAvatar className="mr-4 hidden md:block" size={40} />
         {/* Avatar (mobile) */}
         <WebsiteAvatar className="mr-2 md:hidden" size={32} />
-        <div>
+        <div className="mr-8">
           <div className="text-base font-semibold md:text-2xl">optimize_deps</div>
           <span className="mt-0.5 text-sm text-gray-11 md:mt-1 md:text-base">
-            optimize_deps_description
+            Paste a smart contract, and it will recommend more optimized dependencies, as well as a
+            few basic best practices for saving gas.
           </span>
         </div>
       </div>
