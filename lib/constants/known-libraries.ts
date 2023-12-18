@@ -24,3 +24,10 @@ KNOWN_LIBRARIES.Multicaller = KNOWN_LIBRARIES.Solady;
 export const REMAPPINGS: Record<string, RecommendedLibrary> = {
   Multicall: 'Multicaller',
 };
+
+/**
+ * Exceptions for multiple contracts to recommend depending on the use case.
+ */
+export const EXCEPTIONS: Record<string, string[]> = {
+  Multicaller: ['Multicaller', 'MulticallerWithSender', 'MulticallerWithSigner'],
+};

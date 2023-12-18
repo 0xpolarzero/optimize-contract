@@ -45,18 +45,20 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
 
       const rec: RecommendedContract[] = [];
 
-      const processed = lines.map((line) => {
+      const processed = lines.flatMap((line) => {
         const recommended = findRecommendation_libraryToLibrary(line);
-        if (!recommended) return { value: line, highlight: 0 };
+        if (!recommended || recommended.length === 0) return [{ value: line, highlight: 0 }];
 
-        rec.push(recommended);
+        rec.push(...recommended);
         return [
           { value: line, highlight: -1 },
-          { value: recommended.import, highlight: 1 },
+          ...(recommended.length === 1
+            ? [{ value: recommended[0].import, highlight: 1 }]
+            : recommended.map((r) => ({ value: r.import, highlight: 2 }))),
         ];
       });
 
-      setUpdatedLines(processed.flat());
+      setUpdatedLines(processed);
       setRecommendations(rec);
       setUpdatedCount(rec.length);
     };
@@ -85,6 +87,9 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
         showLineNumbers={false}
         highlightLinesDiffPlus={updatedLines.map((line, i) => (line.highlight === 1 ? i + 1 : 0))}
         highlightLinesDiffMinus={updatedLines.map((line, i) => (line.highlight === -1 ? i + 1 : 0))}
+        highlightLinesDiffMultiple={updatedLines.map((line, i) =>
+          line.highlight === 2 ? i + 1 : 0,
+        )}
       >
         {updatedLines.map((line) => line.value).join('\n')}
       </CodeBlock>

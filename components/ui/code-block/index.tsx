@@ -4,6 +4,7 @@ import CodeBlockLanguageLogo from './language-logo';
 import {
   codeBlockContainerVariants,
   codeBlockDiffMinusStyles,
+  codeBlockDiffMultipleStyles,
   codeBlockDiffNoneStyles,
   codeBlockDiffPlusStyles,
   codeBlockHeaderFileNameContainerStyles,
@@ -11,6 +12,7 @@ import {
   codeBlockHeaderFileNameStyles,
   codeBlockHeaderStyles,
   codeBlockLineHighlightedDiffMinusStyles,
+  codeBlockLineHighlightedDiffMultipleStyles,
   codeBlockLineHighlightedDiffPlusStyles,
   codeBlockLineHighlightedStyles,
   codeBlockLineNumberStyles,
@@ -46,6 +48,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
   highlightLines = [],
   highlightLinesDiffPlus = [],
   highlightLinesDiffMinus = [],
+  highlightLinesDiffMultiple = [],
   showLineNumbers = true,
   roundedTop = true,
   children,
@@ -129,6 +132,9 @@ const CodeBlock: FC<CodeBlockProps> = ({
                         highlightLinesDiffMinus.includes(i + 1)
                           ? codeBlockLineHighlightedDiffMinusStyles
                           : '',
+                        highlightLinesDiffMultiple.includes(i + 1)
+                          ? codeBlockLineHighlightedDiffMultipleStyles
+                          : '',
                       )}
                       {...restLineProps}
                     >
@@ -141,6 +147,9 @@ const CodeBlock: FC<CodeBlockProps> = ({
                         ) : highlightLinesDiffMinus.includes(i + 1) ? (
                           // minus
                           <div className={codeBlockDiffMinusStyles}>-</div>
+                        ) : highlightLinesDiffMultiple.includes(i + 1) ? (
+                          // multiple
+                          <div className={codeBlockDiffMultipleStyles}>±</div>
                         ) : (
                           // none
                           <div className={codeBlockDiffNoneStyles} />

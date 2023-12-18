@@ -31,6 +31,7 @@ export type CodeBlockProps = Omit<JSX.IntrinsicElements['pre'], 'children'> &
     highlightLines?: number[];
     highlightLinesDiffPlus?: number[];
     highlightLinesDiffMinus?: number[];
+    highlightLinesDiffMultiple?: number[];
     showLineNumbers?: boolean;
     children: string;
   };
