@@ -1,22 +1,29 @@
 # optimize_deps
 
-A basic solution to find better optimized dependencies for a Solidity smart contract.
+A basic solution to find better optimized dependencies for a Solidity smart contract, as well as a few basic best practices for saving gas.
+
+IMAGE
+
+Design forked and modified from [5/9's website](https://fiveoutofnine.com).
 
 ## Features
 
-Paste a smart contract with its imports, and it will replace them with optimized dependencies (currently OpenZeppelin/Solmate => Solady), with:
-
-- the imports diff;
-- links to the new contracts;
-- short description, list of updated contracts, audit status of the library.
-
-Design forked and modified from [5/9's website](https://fiveoutofnine.com).
+| Input                       | Output                            | Details                                                     |
+| --------------------------- | --------------------------------- | ----------------------------------------------------------- |
+| OpenZeppelin dependency     | Solady alternative (if it exists) | Imports diff, links, description, updated contracts, audits |
+| Solmate dependency          | Solady alternative (if it exists) | Imports diff, links, description, updated contracts, audits |
+| Openzeppelin Multicall      | Solady Multicaller                | Imports diff, links, description, updated contracts, audits |
+| ERC721 batch operations     | Advice and mock mitigation        | Imports diff, links, description, updated contracts, audits |
+| Events emitted inside loops | Advice and mock mitigation        | Code diff, basic modification                               |
+| Airdrop pattern             | Advice and alternative            | Mitigation, link to alternative method (Gaslite Drop)       |
+| Thirdweb contracts          | Advice and alternative (?)        | Mitigation, template for alternative method (?)             |
 
 ## TODO
 
 - [x] Support Openzeppelin
 - [x] Support Solmate
 - [x] Support multicall contracts (find mostly used implementations) => recommend https://github.com/Vectorized/multicaller
+- [ ] Recognize events emitted inside loops, recommend {Event}Batch outside
 - [ ] Consider [this](https://github.com/lambdalf-dev/ethereum-contracts) for ERC721 batch operations (need to run benchmarks with Solady)
 - [ ] Pattern matching: recognize some kind of airdrop pattern => recommend an optimized solution (Gaslite drop)
 - [ ] Thirdweb contracts (e.g. DropERC20Token): do you really need all this? recommend a simpler solution (maybe provide some templates??)
