@@ -16,7 +16,7 @@ Design forked and modified from [5/9's website](https://fiveoutofnine.com).
 
 - [x] Support Openzeppelin
 - [x] Support Solmate
-- [ ] Support multicall contracts (find mostly used implementations) => recommend https://github.com/Vectorized/multicaller
+- [x] Support multicall contracts (find mostly used implementations) => recommend https://github.com/Vectorized/multicaller
 - [ ] Consider [this](https://github.com/lambdalf-dev/ethereum-contracts) for ERC721 batch operations (need to run benchmarks with Solady)
 - [ ] Pattern matching: recognize some kind of airdrop pattern => recommend an optimized solution (Gaslite drop)
 - [ ] Thirdweb contracts (e.g. DropERC20Token): do you really need all this? recommend a simpler solution (maybe provide some templates??)
