@@ -14,7 +14,6 @@ export const parseMulticallerStructure: () => RecommendedContract[] = () => {
   lines.forEach((line) => {
     const directoryMatch = line.match(/^(\w+)/);
     const itemMatch = line.match(/├─ (\w+)\.sol — "(.+)"/);
-    console.log(itemMatch);
 
     if (directoryMatch) {
       currentPath = directoryMatch[1] ? `${directoryMatch[1]}/` : '';
