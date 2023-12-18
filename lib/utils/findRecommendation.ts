@@ -3,7 +3,7 @@ import { RECOMMENDED_LIBRARIES } from '../constants/recommended-libraries';
 import { KNOWN_LIBRARIES } from '@/lib/constants/known-libraries';
 import { RecommendedContract, RecommendedLibrary } from '@/lib/types/library';
 
-const findRecommendation_libraryToLibrary = (line: string): RecommendedContract | null => {
+export const findRecommendation_libraryToLibrary = (line: string): RecommendedContract | null => {
   // For all known libraries
   for (const [library, prefixes] of Object.entries(KNOWN_LIBRARIES)) {
     // If the import line contains a known prefix (associated with a recommendation)
@@ -24,5 +24,3 @@ const findRecommendation_libraryToLibrary = (line: string): RecommendedContract 
 
   return null;
 };
-
-export default findRecommendation_libraryToLibrary;
