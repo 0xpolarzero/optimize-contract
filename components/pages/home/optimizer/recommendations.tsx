@@ -4,6 +4,7 @@ import { RecommendedContract } from '@/lib/types/library';
 import { findRecommendation_libraryToLibrary } from '@/lib/utils';
 
 import Instructions from '@/components/pages/home/optimizer/instructions';
+import InfoTooltip from '@/components/templates/info-tooltip';
 import { CodeBlock } from '@/components/ui';
 
 // -----------------------------------------------------------------------------
@@ -78,9 +79,23 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
         Recommendations
       </h2>
       {/* imports count */}
-      <span className="text-gray-11">
-        1. Update {updatedCount} import{updatedCount > 1 ? 's' : ''}
-      </span>
+      <div className="flex items-center space-x-2 text-gray-11">
+        <span>
+          1. Update {updatedCount} import{updatedCount > 1 ? 's' : ''}
+        </span>
+        <InfoTooltip
+          content={
+            <div className="grid grid-cols-[min-content_1fr] gap-x-2">
+              <span>+</span>
+              <span className="text-gray-8">add this contract</span>
+              <span>-</span>
+              <span className="text-gray-8">remove this contract</span>
+              <span>±</span>
+              <span className="text-gray-8">choose one of these contracts</span>
+            </div>
+          }
+        />
+      </div>
       {/* updated code */}
       <CodeBlock
         language="solidity"
