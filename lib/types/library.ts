@@ -5,7 +5,7 @@ export type Library = {
   url: string;
   contracts: Contract[];
   instructions?: string;
-  audit?: Audit;
+  audit?: Audit | null;
 };
 
 type Author = {
@@ -39,7 +39,7 @@ export type KnownContract = Contract & {
  * Recommended libraries/contracts
  */
 
-export type RecommendedLibrary = 'Solady';
+export type RecommendedLibrary = 'Solady' | 'Multicaller';
 
 export type RecommendedContract = Contract & {
   library: RecommendedLibrary;

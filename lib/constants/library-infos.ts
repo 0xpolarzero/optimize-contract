@@ -17,4 +17,18 @@ export const LIBRARY_INFOS: Record<RecommendedLibrary, Library> = {
       url: 'https://github.com/Vectorized/solady/tree/main/audits',
     },
   },
+  Multicaller: {
+    name: 'Multicaller',
+    author: { name: 'Vectorized', url: 'https://twitter.com/optimizoor' },
+    description: 'Efficiently call multiple contracts in a single transaction.',
+    url: 'https://github.com/Vectorized/multicaller',
+    contracts: Object.values(RECOMMENDED_LIBRARIES['Multicaller']),
+    instructions:
+      'Enables "forwarding" of msg.sender to the contracts called; see repo for deployed contracts.',
+    audit: {
+      authors: ['0xphaze', '0xth0mas'],
+      dates: [new Date('2023-10-07'), new Date('2023-12-14')],
+      url: 'https://github.com/Vectorized/multicaller/tree/main/audits',
+    },
+  },
 };
