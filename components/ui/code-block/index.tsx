@@ -51,6 +51,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
   highlightLinesDiffMultiple = [],
   showLineNumbers = true,
   roundedTop = true,
+  startLine = 0,
   children,
   ...rest
 }) => {
@@ -139,7 +140,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
                       {...restLineProps}
                     >
                       {showLineNumbers ? (
-                        <div className={codeBlockLineNumberStyles}>{i + 1}</div>
+                        <div className={codeBlockLineNumberStyles}>{startLine + i + 1}</div>
                       ) : highlightLinesDiffPlus.length || highlightLinesDiffMinus.length ? (
                         highlightLinesDiffPlus.includes(i + 1) ? (
                           // plus
