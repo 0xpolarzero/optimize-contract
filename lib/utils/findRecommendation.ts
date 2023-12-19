@@ -60,7 +60,6 @@ export const findPatternMatches = (code: string): PatternMatch[] => {
     let match: RegExpExecArray | null;
 
     while ((match = regex.exec(code)) !== null) {
-      console.log(match);
       const functionStartIndex = match.index + match[0].indexOf('function');
       const linesUpToMatch = code.substring(0, functionStartIndex).split('\n').length;
       const endOfMatch = findEndOfFunction(code, functionStartIndex);
@@ -102,7 +101,6 @@ const findEndOfFunction = (code: string, startIndex: number): number => {
 };
 
 const adjustIndentation = (code: string): string => {
-  console.log(code);
   const lines = code.split('\n');
   while (lines.length > 0 && lines[0].trim() === '') {
     lines.shift();

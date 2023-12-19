@@ -24,7 +24,6 @@ const PatternRecommendations: FC<PatternRecommendationsProps> = ({ input }) => {
 
   useEffect(() => {
     const matches = findPatternMatches(input);
-    console.log(matches);
     setRecommendations(matches);
   }, [input]);
 
