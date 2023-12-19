@@ -1,5 +1,6 @@
 import { type FC, useEffect, useMemo, useState } from 'react';
 
+import { UpdatedLine } from '@/lib/types/code';
 import { RecommendedContract } from '@/lib/types/library';
 import { findRecommendation_libraryToLibrary } from '@/lib/utils';
 
@@ -13,11 +14,6 @@ import { CodeBlock } from '@/components/ui';
 
 type RecommendationsProps = {
   input: string;
-};
-
-type UpdatedLine = {
-  value: string;
-  highlight: number;
 };
 
 // -----------------------------------------------------------------------------
@@ -36,6 +32,12 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
   const [updatedCount, setUpdatedCount] = useState<number>(0);
 
   useEffect(() => {
+    const verifySemicolon = (line: string) => {
+      if (!line.startsWith('import')) return line;
+      if (line.endsWith(';')) return line;
+      return `${line.trimEnd()};`;
+    };
+
     const processLines = () => {
       if (!lines) {
         setUpdatedLines([]);
@@ -47,21 +49,23 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
       const rec: RecommendedContract[] = [];
 
       let updated = 0;
-      const processed = lines.flatMap((line) => {
-        const recommended = findRecommendation_libraryToLibrary(line);
-        if (!recommended || recommended.length === 0) return [{ value: line, highlight: 0 }];
+      const imports = lines.flatMap((line) => {
+        const normalizedLine = verifySemicolon(line);
+        const recommended = findRecommendation_libraryToLibrary(normalizedLine);
+        if (!recommended || recommended.length === 0)
+          return [{ value: normalizedLine, highlight: 0 }];
 
         updated += 1;
         rec.push(...recommended);
         return [
-          { value: line, highlight: -1 },
+          { value: normalizedLine, highlight: -1 },
           ...(recommended.length === 1
             ? [{ value: recommended[0].import, highlight: 1 }]
             : recommended.map((r) => ({ value: r.import, highlight: 2 }))),
         ];
       });
 
-      setUpdatedLines(processed);
+      setUpdatedLines(imports);
       setRecommendations(rec);
       setUpdatedCount(updated);
     };
@@ -77,9 +81,7 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
 
   return (
     <div className="flex flex-col space-y-2">
-      <h2 className="text-xl font-semibold leading-tight tracking-tight text-gray-12 md:text-2xl">
-        Recommendations
-      </h2>
+      <h3 className="text-xl font-semibold">Optimized dependencies</h3>
       {/* imports count */}
       <div className="flex items-center space-x-2 text-gray-11">
         <span>
