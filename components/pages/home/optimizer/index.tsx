@@ -1,6 +1,7 @@
 import { type FC, useState } from 'react';
 
 import ImportsInput from './imports-input';
+import PatternRecommendations from './pattern-recommendations';
 import Recommendations from './recommendations';
 
 import { EXAMPLE_CODE } from '@/lib/constants/example';
@@ -22,6 +23,7 @@ const Optimizer: FC = () => {
       </div>
       <ImportsInput input={input} setInput={setInput} />
       <Recommendations input={input} />
+      <PatternRecommendations input={input} />
     </div>
   );
 };

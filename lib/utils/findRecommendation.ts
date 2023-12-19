@@ -1,6 +1,8 @@
 import { RECOMMENDED_LIBRARIES } from '../constants/recommended-libraries';
+import { PatternMatch } from '../types/code';
 
 import { EXCEPTIONS, KNOWN_LIBRARIES, REMAPPINGS } from '@/lib/constants/known-libraries';
+import { RECOMMENDATION_PATTERNS } from '@/lib/constants/recommendation-patterns';
 import { RecommendedContract, RecommendedLibrary } from '@/lib/types/library';
 
 /**
@@ -44,4 +46,82 @@ export const findRecommendation_libraryToLibrary = (line: string): RecommendedCo
   }
 
   return null;
+};
+
+/**
+ * Find a suspicious pattern in a given contract
+ */
+export const findPatternMatches = (code: string): PatternMatch[] => {
+  const matches: PatternMatch[] = [];
+  const lineCount = 1; // Start from line 1
+
+  RECOMMENDATION_PATTERNS.forEach((pattern) => {
+    const regex = new RegExp(pattern.regex, 'gi');
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(code)) !== null) {
+      console.log(match);
+      const functionStartIndex = match.index + match[0].indexOf('function');
+      const linesUpToMatch = code.substring(0, functionStartIndex).split('\n').length;
+      const endOfMatch = findEndOfFunction(code, functionStartIndex);
+
+      // Extract the matched code and adjust indentation
+      const matchedCode = code.substring(match.index, endOfMatch);
+      const adjustedCode = adjustIndentation(matchedCode);
+
+      matches.push({
+        start: functionStartIndex,
+        end: endOfMatch,
+        startLine: lineCount + linesUpToMatch - 1,
+        pattern: pattern,
+        code: adjustedCode, // Store the adjusted code
+      });
+    }
+  });
+
+  return matches.sort((a, b) => a.start - b.start);
+};
+
+const findEndOfFunction = (code: string, startIndex: number): number => {
+  let openBraces = 0;
+  let index = startIndex;
+
+  while (index < code.length) {
+    if (code[index] === '{') {
+      openBraces++;
+    } else if (code[index] === '}') {
+      openBraces--;
+      if (openBraces === 0) {
+        return index + 1; // Include the closing brace in the match
+      }
+    }
+    index++;
+  }
+
+  return index; // In case the function body is not properly closed
+};
+
+const adjustIndentation = (code: string): string => {
+  console.log(code);
+  const lines = code.split('\n');
+  while (lines.length > 0 && lines[0].trim() === '') {
+    lines.shift();
+  }
+
+  if (lines.length === 0) return code;
+
+  // Find the number of leading spaces in the first line
+  const firstLineIndentation = lines[0].search(/\S/);
+  if (firstLineIndentation === -1) {
+    // If the first line is empty, find the indentation of the next non-empty line
+    for (let i = 1; i < lines.length; i++) {
+      const indentation = lines[i].search(/\S/);
+      if (indentation !== -1) {
+        return lines.map((line) => line.substring(indentation)).join('\n');
+      }
+    }
+  }
+
+  // Adjust indentation based on the first line
+  return lines.map((line) => line.substring(firstLineIndentation)).join('\n');
 };
