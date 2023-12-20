@@ -1,5 +1,7 @@
 import { type FC, useEffect, useMemo, useState } from 'react';
 
+import { ASTNode, ImportDirective } from '@solidity-parser/parser/dist/src/ast-types';
+
 import { UpdatedLine } from '@/lib/types/code';
 import { RecommendedContract } from '@/lib/types/library';
 import { findRecommendation_libraryToLibrary } from '@/lib/utils';
@@ -12,34 +14,34 @@ import { CodeBlock } from '@/components/ui';
 // Props
 // -----------------------------------------------------------------------------
 
-type RecommendationsProps = {
+type RecDependenciesProps = {
   input: string;
+  parsed: ASTNode;
 };
 
 // -----------------------------------------------------------------------------
 // Component
 // -----------------------------------------------------------------------------
 
-const Recommendations: FC<RecommendationsProps> = ({ input }) => {
-  const lines = useMemo(
-    () => input.match(/^import\s+((\{[^}]*\}\s+from\s+)?".+?")\s*;?$/gm),
-    [input],
-  );
+const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
+  const imports = useMemo(() => {
+    // Extract import lines from the AST node
+    if (parsed.type === 'SourceUnit') {
+      const importNodes = parsed.children.filter(
+        (node): node is ImportDirective => node.type === 'ImportDirective',
+      );
+      return importNodes.map((node) => node.pathLiteral.value);
+    }
+    return [];
+  }, [parsed]);
 
   const [updatedLines, setUpdatedLines] = useState<UpdatedLine[]>([]);
   const [recommendations, setRecommendations] = useState<RecommendedContract[]>([]);
-
   const [updatedCount, setUpdatedCount] = useState<number>(0);
 
   useEffect(() => {
-    const verifySemicolon = (line: string) => {
-      if (!line.startsWith('import')) return line;
-      if (line.endsWith(';')) return line;
-      return `${line.trimEnd()};`;
-    };
-
     const processLines = () => {
-      if (!lines) {
+      if (!imports) {
         setUpdatedLines([]);
         setRecommendations([]);
         setUpdatedCount(0);
@@ -48,30 +50,33 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
 
       const rec: RecommendedContract[] = [];
 
-      let updated = 0;
-      const imports = lines.flatMap((line) => {
-        const normalizedLine = verifySemicolon(line);
-        const recommended = findRecommendation_libraryToLibrary(normalizedLine);
+      let updatedCount = 0;
+      const newImports = imports.flatMap((line) => {
+        const recommended = findRecommendation_libraryToLibrary(line);
         if (!recommended || recommended.length === 0)
-          return [{ value: normalizedLine, highlight: 0 }];
+          return [{ value: `import ${line}`, highlight: 0 }];
 
-        updated += 1;
+        updatedCount += 1;
         rec.push(...recommended);
+        console.log(recommended);
         return [
-          { value: normalizedLine, highlight: -1 },
+          {
+            value: `import ${line}`,
+            highlight: -1,
+          },
           ...(recommended.length === 1
             ? [{ value: recommended[0].import, highlight: 1 }]
             : recommended.map((r) => ({ value: r.import, highlight: 2 }))),
         ];
       });
 
-      setUpdatedLines(imports);
+      setUpdatedLines(newImports);
       setRecommendations(rec);
-      setUpdatedCount(updated);
+      setUpdatedCount(updatedCount);
     };
 
     processLines();
-  }, [lines]);
+  }, [imports]);
 
   if (input === '') return null;
 
@@ -118,6 +123,6 @@ const Recommendations: FC<RecommendationsProps> = ({ input }) => {
   );
 };
 
-Recommendations.displayName = 'Recommendations';
+RecDependencies.displayName = 'RecDependencies';
 
-export default Recommendations;
+export default RecDependencies;

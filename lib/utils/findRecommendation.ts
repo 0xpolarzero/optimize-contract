@@ -53,14 +53,16 @@ export const findRecommendation_libraryToLibrary = (line: string): RecommendedCo
  */
 export const findPatternMatches = (code: string): PatternMatch[] => {
   const matches: PatternMatch[] = [];
-  const lineCount = 1; // Start from line 1
 
   RECOMMENDATION_PATTERNS.forEach((pattern) => {
     const regex = new RegExp(pattern.regex, 'gi');
     let match: RegExpExecArray | null;
 
     while ((match = regex.exec(code)) !== null) {
-      const functionStartIndex = match.index + match[0].indexOf('function');
+      const functionStartIndex =
+        match.index +
+        match[0].indexOf(match[1]) +
+        (pattern.isFunctionPattern ? match[0].indexOf('function') : 0);
       const linesUpToMatch = code.substring(0, functionStartIndex).split('\n').length;
       const endOfMatch = findEndOfFunction(code, functionStartIndex);
 
@@ -71,8 +73,9 @@ export const findPatternMatches = (code: string): PatternMatch[] => {
       matches.push({
         start: functionStartIndex,
         end: endOfMatch,
-        startLine: lineCount + linesUpToMatch - 1,
+        startLine: linesUpToMatch,
         pattern: pattern,
+        match: match[2],
         code: adjustedCode, // Store the adjusted code
       });
     }
