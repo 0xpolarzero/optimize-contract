@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui';
 // Props
 // -----------------------------------------------------------------------------
 
-type ImportsInputProps = {
+type InputCodeProps = {
   input: string;
   setInput: (input: string) => void;
 };
@@ -15,7 +15,7 @@ type ImportsInputProps = {
 // Component
 // -----------------------------------------------------------------------------
 
-const ImportsInput: FC<ImportsInputProps> = ({ input, setInput }) => {
+const InputCode: FC<InputCodeProps> = ({ input, setInput }) => {
   return (
     <Textarea
       value={input}
@@ -26,6 +26,6 @@ const ImportsInput: FC<ImportsInputProps> = ({ input, setInput }) => {
   );
 };
 
-ImportsInput.displayName = 'ImportsInput';
+InputCode.displayName = 'InputCode';
 
-export default ImportsInput;
+export default InputCode;
