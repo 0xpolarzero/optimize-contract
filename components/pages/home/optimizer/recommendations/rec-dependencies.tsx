@@ -5,6 +5,7 @@ import {
   ContractDefinition,
   ImportDirective,
 } from '@solidity-parser/parser/dist/src/ast-types';
+import { ChevronRight } from 'lucide-react';
 
 import { UpdatedLine } from '@/lib/types/code';
 import { RecommendedContract } from '@/lib/types/library';
@@ -127,56 +128,64 @@ const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
     processContracts();
   }, [imports, contracts]);
 
-  if (input === '') return null;
-
-  if (!updatedCount) {
+  if (!updatedCount && Object.entries(updatedContracts).length === 0) {
     return <div className="text-gray-11">No recommendations to show</div>;
   }
 
   return (
     <div className="flex flex-col space-y-2">
       <h3 className="text-xl font-semibold">Dependencies</h3>
-      {/* imports count */}
-      <div className="flex items-center space-x-2 text-gray-11">
-        <span>
-          1. Update {updatedCount} import{updatedCount > 1 ? 's' : ''}
-        </span>
-        <InfoTooltip
-          content={
-            <div className="grid grid-cols-[min-content_1fr] gap-x-2">
-              <span>+</span>
-              <span className="text-gray-8">add this contract</span>
-              <span>-</span>
-              <span className="text-gray-8">remove this contract</span>
-              <span>±</span>
-              <span className="text-gray-8">choose one of these contracts</span>
-            </div>
-          }
-        />
-      </div>
-      {/* updated code */}
-      <CodeBlock
-        language="solidity"
-        showLineNumbers={false}
-        highlightLinesDiffPlus={updatedLines.map((line, i) => (line.highlight === 1 ? i + 1 : 0))}
-        highlightLinesDiffMinus={updatedLines.map((line, i) => (line.highlight === -1 ? i + 1 : 0))}
-        highlightLinesDiffMultiple={updatedLines.map((line, i) =>
-          line.highlight === 2 ? i + 1 : 0,
-        )}
-      >
-        {updatedLines.map((line) => line.value).join('\n')}
-      </CodeBlock>
-      {/* instructions */}
-      <span className="text-gray-11">2. Add the following to your contract:</span>
-      <Instructions recommendations={recommendations} />
+      {updatedCount > 0 ? (
+        <>
+          {/* imports count */}
+          <div className="flex items-center space-x-2 text-gray-11">
+            <span className="flex items-center space-x-2 text-gray-11">
+              <ChevronRight size={16} /> Update {updatedCount} import{updatedCount > 1 ? 's' : ''}
+            </span>
+            <InfoTooltip
+              content={
+                <div className="grid grid-cols-[min-content_1fr] gap-x-2">
+                  <span>+</span>
+                  <span className="text-gray-8">add this contract</span>
+                  <span>-</span>
+                  <span className="text-gray-8">remove this contract</span>
+                  <span>±</span>
+                  <span className="text-gray-8">choose one of these contracts</span>
+                </div>
+              }
+            />
+          </div>
+          {/* updated code */}
+          <CodeBlock
+            language="solidity"
+            showLineNumbers={false}
+            highlightLinesDiffPlus={updatedLines.map((line, i) =>
+              line.highlight === 1 ? i + 1 : 0,
+            )}
+            highlightLinesDiffMinus={updatedLines.map((line, i) =>
+              line.highlight === -1 ? i + 1 : 0,
+            )}
+            highlightLinesDiffMultiple={updatedLines.map((line, i) =>
+              line.highlight === 2 ? i + 1 : 0,
+            )}
+          >
+            {updatedLines.map((line) => line.value).join('\n')}
+          </CodeBlock>
+          {/* instructions */}
+          <span className="flex items-center space-x-2 text-gray-11">
+            <ChevronRight size={16} /> Add the following to your contract:
+          </span>
+          <Instructions recommendations={recommendations} />
+        </>
+      ) : null}
       {/* contracts */}
       {Object.entries(updatedContracts).length > 0 ? (
         <div>
           <span className="flex items-center space-x-2 text-gray-11">
-            3. We found the following contracts in your code; consider using the recommended
-            libraries instead:
+            <ChevronRight size={16} /> We found the following contracts in your code; consider using
+            the recommended libraries instead:
           </span>
-          <span>{Object.keys(updatedContracts).join(', ')}</span>
+          <span className="ml-4">{Object.keys(updatedContracts).join(', ')}</span>
           <Instructions
             recommendations={Object.entries(updatedContracts)
               .map(([contractName, recs]) => recs)
