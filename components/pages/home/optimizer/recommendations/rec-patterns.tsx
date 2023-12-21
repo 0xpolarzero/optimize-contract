@@ -1,11 +1,9 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useMemo } from 'react';
 
 import { SourceUnit } from '@solidity-parser/parser/dist/src/ast-types';
 import { ExternalLink } from 'lucide-react';
 
 import { patterns } from '@/lib/constants/patterns';
-import { CodePatternResult } from '@/lib/types/code';
-import { parseContract } from '@/lib/utils/parse-contract';
 
 import { Button, CodeBlock } from '@/components/ui';
 
@@ -23,13 +21,9 @@ type RecPatternsProps = {
 // -----------------------------------------------------------------------------
 
 const RecPatterns: FC<RecPatternsProps> = ({ input, parsed }) => {
-  console.log(parsed);
-  const [recommendations, setRecommendations] = useState<CodePatternResult[]>([]);
-
-  useEffect(() => {
-    // Aggregate results for each function in pattern delection
-    setRecommendations(patterns.map((pattern) => pattern(input, parsed)).flat());
-  }, [input]);
+  const recommendations = useMemo(() => {
+    return patterns.map((pattern) => pattern(input, parsed)).flat();
+  }, [input, parsed]);
 
   if (recommendations.length === 0) {
     return null;
@@ -40,9 +34,10 @@ const RecPatterns: FC<RecPatternsProps> = ({ input, parsed }) => {
       <h3 className="text-xl font-semibold">Other recommendations</h3>
       {recommendations.map((rec, index) => (
         <div key={index} className="flex flex-col space-y-2">
-          <div className="flex items-center justify-between space-x-2">
+          <div className="flex items-start justify-between space-x-4">
             <h3 className="text-md font-medium text-gray-11">{rec.message}</h3>
             <Button
+              className="whitespace-nowrap"
               size="sm"
               variant="secondary"
               intent="primary"
