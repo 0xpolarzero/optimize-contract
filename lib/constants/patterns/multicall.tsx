@@ -19,12 +19,13 @@ export const findMulticallPatterns = (code: string, node: ASTNode): CodePatternR
               <pre className="inline-block" style={{ color: '#849DFF' }}>
                 {currentNode.name}
               </pre>
-              ; you might want to consider using an optimized Multicall library.
+              ; you might want to consider using an optimized ùulticall library.
             </div>
           ),
           startLine: currentNode.loc?.start.line || 1,
           highlightedLines: [1],
           link: 'https://github.com/Vectorized/multicaller',
+          action: 'See library',
         });
       }
     }
@@ -42,12 +43,13 @@ export const findMulticallPatterns = (code: string, node: ASTNode): CodePatternR
               <pre className="inline-block" style={{ color: '#849DFF' }}>
                 {currentNode.name}
               </pre>
-              ; you might want to consider using an optimized Multicall library.
+              ; you might want to consider using an optimized multicall library.
             </div>
           ),
           startLine: currentNode.loc?.start.line || 1,
           highlightedLines: [1],
           link: 'https://github.com/Vectorized/multicaller',
+          action: 'See library',
         });
       }
     }

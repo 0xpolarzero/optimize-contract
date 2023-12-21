@@ -11,4 +11,5 @@ export type CodePatternResult = {
   highlightedLines: number[];
   message: ReactElement;
   link: string;
+  action?: string;
 };

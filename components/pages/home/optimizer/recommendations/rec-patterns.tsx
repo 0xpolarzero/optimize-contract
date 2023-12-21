@@ -45,7 +45,7 @@ const RecPatterns: FC<RecPatternsProps> = ({ input, parsed }) => {
               rightIcon={<ExternalLink />}
               newTab
             >
-              Open alternative
+              {rec.action || 'Learn more'}
             </Button>
           </div>
           <CodeBlock
