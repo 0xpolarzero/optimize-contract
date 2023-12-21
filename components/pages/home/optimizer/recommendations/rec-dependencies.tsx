@@ -1,12 +1,19 @@
 import { type FC, useEffect, useMemo, useState } from 'react';
 
-import { ASTNode, ImportDirective } from '@solidity-parser/parser/dist/src/ast-types';
+import {
+  ASTNode,
+  ContractDefinition,
+  ImportDirective,
+} from '@solidity-parser/parser/dist/src/ast-types';
 
 import { UpdatedLine } from '@/lib/types/code';
 import { RecommendedContract } from '@/lib/types/library';
-import { findRecommendation_libraryToLibrary } from '@/lib/utils';
+import {
+  findRecommendation_libraryToRecommended,
+  findRecommendation_nameToRecommended,
+} from '@/lib/utils';
 
-import Instructions from '@/components/pages/home/optimizer/instructions';
+import Instructions from '@/components/pages/home/optimizer/recommendations/rec-dependencies-instructions';
 import InfoTooltip from '@/components/templates/info-tooltip';
 import { CodeBlock } from '@/components/ui';
 
@@ -24,8 +31,8 @@ type RecDependenciesProps = {
 // -----------------------------------------------------------------------------
 
 const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
-  const imports = useMemo(() => {
-    // Extract import lines from the AST node
+  // Extract import lines from the AST node
+  const imports: string[] = useMemo(() => {
     if (parsed.type === 'SourceUnit') {
       const importNodes = parsed.children.filter(
         (node): node is ImportDirective => node.type === 'ImportDirective',
@@ -35,9 +42,25 @@ const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
     return [];
   }, [parsed]);
 
+  // Extract contract names from the AST node
+  const contracts: string[] = useMemo(() => {
+    if (parsed.type === 'SourceUnit') {
+      const contractNodes = parsed.children.filter(
+        (node): node is ContractDefinition => node.type === 'ContractDefinition',
+      );
+      return contractNodes.map((node) => node.name);
+    }
+    return [];
+  }, [parsed]);
+
+  // Import lines
   const [updatedLines, setUpdatedLines] = useState<UpdatedLine[]>([]);
   const [recommendations, setRecommendations] = useState<RecommendedContract[]>([]);
   const [updatedCount, setUpdatedCount] = useState<number>(0);
+  // Contracts
+  const [updatedContracts, setUpdatedContracts] = useState<Record<string, RecommendedContract[]>>(
+    {},
+  );
 
   useEffect(() => {
     const processLines = () => {
@@ -48,17 +71,16 @@ const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
         return;
       }
 
-      const rec: RecommendedContract[] = [];
+      const rec: Record<string, RecommendedContract[]> =
+        findRecommendation_libraryToRecommended(imports);
 
       let updatedCount = 0;
       const newImports = imports.flatMap((line) => {
-        const recommended = findRecommendation_libraryToLibrary(line);
+        const recommended = rec[line];
         if (!recommended || recommended.length === 0)
           return [{ value: `import ${line}`, highlight: 0 }];
 
         updatedCount += 1;
-        rec.push(...recommended);
-        console.log(recommended);
         return [
           {
             value: `import ${line}`,
@@ -71,12 +93,39 @@ const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
       });
 
       setUpdatedLines(newImports);
-      setRecommendations(rec);
+
+      // Extract values from the object and flatten the array
+      setRecommendations(Object.values(rec).flat());
       setUpdatedCount(updatedCount);
     };
 
+    const processContracts = () => {
+      if (!contracts) {
+        setUpdatedContracts({});
+        return;
+      }
+
+      const rec: Record<string, RecommendedContract[]> =
+        // remove duplicates in the keys
+        findRecommendation_nameToRecommended(
+          contracts.filter((c, i) => contracts.indexOf(c) === i),
+        );
+
+      // If any is already present in the recommendations, remove it
+      // Object.values(rec).forEach((recs) => {
+      //   recs.forEach((rec) => {
+      //     if (recommendations.some((r) => r.name === rec.name)) {
+      //       recs.splice(recs.indexOf(rec), 1);
+      //     }
+      //   });
+      // });
+
+      setUpdatedContracts(rec);
+    };
+
     processLines();
-  }, [imports]);
+    processContracts();
+  }, [imports, contracts]);
 
   if (input === '') return null;
 
@@ -86,7 +135,7 @@ const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
 
   return (
     <div className="flex flex-col space-y-2">
-      <h3 className="text-xl font-semibold">Optimized dependencies</h3>
+      <h3 className="text-xl font-semibold">Dependencies</h3>
       {/* imports count */}
       <div className="flex items-center space-x-2 text-gray-11">
         <span>
@@ -118,7 +167,23 @@ const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
         {updatedLines.map((line) => line.value).join('\n')}
       </CodeBlock>
       {/* instructions */}
+      <span className="text-gray-11">2. Add the following to your contract:</span>
       <Instructions recommendations={recommendations} />
+      {/* contracts */}
+      {Object.entries(updatedContracts).length > 0 ? (
+        <div>
+          <span className="flex items-center space-x-2 text-gray-11">
+            3. We found the following contracts in your code; consider using the recommended
+            libraries instead:
+          </span>
+          <span>{Object.keys(updatedContracts).join(', ')}</span>
+          <Instructions
+            recommendations={Object.entries(updatedContracts)
+              .map(([contractName, recs]) => recs)
+              .flat()}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };
