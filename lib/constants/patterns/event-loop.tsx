@@ -13,7 +13,7 @@ import {
 } from '@solidity-parser/parser/dist/src/ast-types';
 
 import { CodePatternResult } from '@/lib/types/code';
-import { extractFunctionCodeFromNode } from '@/lib/utils';
+import { extractCodeFromNode } from '@/lib/utils';
 
 export const findFunctionsWithLoopEvent = (code: string, ast: SourceUnit): CodePatternResult[] => {
   const result: CodePatternResult[] = [];
@@ -25,7 +25,7 @@ export const findFunctionsWithLoopEvent = (code: string, ast: SourceUnit): CodeP
     // Initialize current function with details
     if (node.type === 'FunctionDefinition') {
       currentFunction = {
-        code: extractFunctionCodeFromNode(code, node),
+        code: extractCodeFromNode(code, node),
         message: <>aaa</>,
         startLine: node.loc?.start.line || 1,
         highlightedLines: [],
@@ -96,7 +96,7 @@ const traverseStatements = (
             such as{' '}
             {eventsInLoop.map((event, index) => (
               <>
-                <pre key={index} className="inline-block">
+                <pre key={index} className="inline-block" style={{ color: '#849DFF' }}>
                   {event.eventName}
                   Batch
                 </pre>
