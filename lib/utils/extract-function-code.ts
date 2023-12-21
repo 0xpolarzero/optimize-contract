@@ -1,7 +1,7 @@
-import { FunctionDefinition } from '@solidity-parser/parser/dist/src/ast-types';
+import { ASTNode } from '@solidity-parser/parser/dist/src/ast-types';
 
 // Get the code of a function, with the adapted indentation (basically minus the indentation from the contract)
-export const extractFunctionCodeFromNode = (code: string, node: FunctionDefinition) => {
+export const extractCodeFromNode = (code: string, node: ASTNode) => {
   const lines = code.split('\n');
   const startLine = node.loc?.start.line || 1;
   const startColumn = node.loc?.start.column || 1;
