@@ -1,9 +1,9 @@
 import { type FC, useEffect, useMemo, useState } from 'react';
 
 import {
-  ASTNode,
   ContractDefinition,
   ImportDirective,
+  SourceUnit,
 } from '@solidity-parser/parser/dist/src/ast-types';
 import { ChevronRight } from 'lucide-react';
 
@@ -24,7 +24,7 @@ import { CodeBlock } from '@/components/ui';
 
 type RecDependenciesProps = {
   input: string;
-  parsed: ASTNode;
+  parsed: SourceUnit;
 };
 
 // -----------------------------------------------------------------------------
@@ -111,15 +111,6 @@ const RecDependencies: FC<RecDependenciesProps> = ({ input, parsed }) => {
         findRecommendation_nameToRecommended(
           contracts.filter((c, i) => contracts.indexOf(c) === i),
         );
-
-      // If any is already present in the recommendations, remove it
-      // Object.values(rec).forEach((recs) => {
-      //   recs.forEach((rec) => {
-      //     if (recommendations.some((r) => r.name === rec.name)) {
-      //       recs.splice(recs.indexOf(rec), 1);
-      //     }
-      //   });
-      // });
 
       setUpdatedContracts(rec);
     };

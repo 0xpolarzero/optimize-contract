@@ -1,7 +1,8 @@
 import { type FC } from 'react';
 
 import RecDependencies from './rec-dependencies';
-import { ASTNode } from '@solidity-parser/parser/dist/src/ast-types';
+import RecPatterns from './rec-patterns';
+import { SourceUnit } from '@solidity-parser/parser/dist/src/ast-types';
 
 // -----------------------------------------------------------------------------
 // Props
@@ -9,7 +10,7 @@ import { ASTNode } from '@solidity-parser/parser/dist/src/ast-types';
 
 type RecommendationsProps = {
   input: string;
-  parsed: ASTNode;
+  parsed: SourceUnit;
 };
 
 // -----------------------------------------------------------------------------
@@ -17,7 +18,12 @@ type RecommendationsProps = {
 // -----------------------------------------------------------------------------
 
 const Recommendations: FC<RecommendationsProps> = ({ input, parsed }) => {
-  return <RecDependencies input={input} parsed={parsed} />;
+  return (
+    <div className="flex flex-col space-y-4">
+      <RecDependencies input={input} parsed={parsed} />
+      <RecPatterns input={input} parsed={parsed} />
+    </div>
+  );
 };
 
 Recommendations.displayName = 'Recommendations';

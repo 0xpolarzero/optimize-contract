@@ -1,9 +1,8 @@
-import { type FC, useMemo, useState } from 'react';
+import { type FC, useState } from 'react';
 
 import InputCode from './input-code';
-import PatternRecommendations from './pattern-recommendations';
 import Recommendations from './recommendations';
-import { ASTNode } from '@solidity-parser/parser/dist/src/ast-types';
+import { SourceUnit } from '@solidity-parser/parser/dist/src/ast-types';
 import { ExternalLink } from 'lucide-react';
 
 import { EXAMPLE_CODE } from '@/lib/constants/example';
@@ -15,7 +14,7 @@ const Optimizer: FC = () => {
   const { toast } = useToast();
 
   const [input, setInput] = useState<string>('');
-  const [parsedInput, setParsedInput] = useState<ASTNode | null>(null);
+  const [parsedInput, setParsedInput] = useState<SourceUnit | null>(null);
 
   const submit = () => {
     const ast = parseContract(input);
