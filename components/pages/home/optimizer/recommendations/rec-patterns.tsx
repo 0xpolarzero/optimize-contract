@@ -1,9 +1,11 @@
 import { type FC, useEffect, useState } from 'react';
 
+import { SourceUnit } from '@solidity-parser/parser/dist/src/ast-types';
 import { ExternalLink } from 'lucide-react';
 
-import { PatternMatch } from '@/lib/types/code';
-import { findPatternMatches } from '@/lib/utils/findRecommendation';
+import { patterns } from '@/lib/constants/patterns';
+import { CodePatternResult } from '@/lib/types/code';
+import { parseContract } from '@/lib/utils/parse-contract';
 
 import { Button, CodeBlock } from '@/components/ui';
 
@@ -11,20 +13,22 @@ import { Button, CodeBlock } from '@/components/ui';
 // Props
 // -----------------------------------------------------------------------------
 
-type PatternRecommendationsProps = {
+type RecPatternsProps = {
   input: string;
+  parsed: SourceUnit;
 };
 
 // -----------------------------------------------------------------------------
 // Component
 // -----------------------------------------------------------------------------
 
-const PatternRecommendations: FC<PatternRecommendationsProps> = ({ input }) => {
-  const [recommendations, setRecommendations] = useState<PatternMatch[]>([]);
+const RecPatterns: FC<RecPatternsProps> = ({ input, parsed }) => {
+  console.log(parsed);
+  const [recommendations, setRecommendations] = useState<CodePatternResult[]>([]);
 
   useEffect(() => {
-    const matches = findPatternMatches(input);
-    setRecommendations(matches);
+    // Aggregate results for each function in pattern delection
+    setRecommendations(patterns.map((pattern) => pattern(input, parsed)).flat());
   }, [input]);
 
   if (recommendations.length === 0) {
@@ -37,19 +41,23 @@ const PatternRecommendations: FC<PatternRecommendationsProps> = ({ input }) => {
       {recommendations.map((rec, index) => (
         <div key={index} className="flex flex-col space-y-2">
           <div className="flex items-center justify-between space-x-2">
-            <h3 className="text-md font-medium text-gray-11">{rec.pattern.message}</h3>
+            <h3 className="text-md font-medium text-gray-11">{rec.message}</h3>
             <Button
               size="sm"
               variant="secondary"
               intent="primary"
-              href={rec.pattern.link}
+              href={rec.link}
               rightIcon={<ExternalLink />}
               newTab
             >
               Open alternative
             </Button>
           </div>
-          <CodeBlock language="solidity" startLine={rec.startLine - 1} highlightLines={[1]}>
+          <CodeBlock
+            language="solidity"
+            startLine={rec.startLine - 1}
+            highlightLines={rec.highlightedLines}
+          >
             {rec.code}
           </CodeBlock>
         </div>
@@ -58,6 +66,6 @@ const PatternRecommendations: FC<PatternRecommendationsProps> = ({ input }) => {
   );
 };
 
-PatternRecommendations.displayName = 'PatternRecommendations';
+RecPatterns.displayName = 'RecPatterns';
 
-export default PatternRecommendations;
+export default RecPatterns;

@@ -24,6 +24,7 @@ Design forked and modified from [5/9's website](https://fiveoutofnine.com).
 - [x] Support Solmate
 - [x] Support multicall contracts (find mostly used implementations) => recommend https://github.com/Vectorized/multicaller
 - [ ] Recognize events emitted inside loops, recommend {Event}Batch outside
+- [x] Recognize multicall function inside the contract as well
 - [ ] Consider [this](https://github.com/lambdalf-dev/ethereum-contracts) for ERC721 batch operations (need to run benchmarks with Solady)
 - [ ] Pattern matching: recognize some kind of airdrop pattern => recommend an optimized solution (Gaslite drop)
 - [ ] Thirdweb contracts (e.g. DropERC20Token): do you really need all this? recommend a simpler solution (maybe provide some templates??)
